@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nature of Experience — Paradox of Acceptance</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --border: #e4e2dc;
+  --text: #1a1a18;
+  --text-muted: #6b6966;
+  --accent: #2d5a27;
+  --accent-light: #eef3ec;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Nav ---- */
+nav {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding: 14px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.nav-brand {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  font-size: 0.8rem;
+  color: #777;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--accent);
+}
+
+/* ---- Progress ---- */
+.progress-track {
+  width: 100%;
+  height: 3px;
+  background: var(--border);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.6s ease;
+}
+
+/* ---- Main ---- */
+main {
+  width: 100%;
+  max-width: 680px;
+  padding: 0 24px;
+  flex: 1;
+}
+
+/* ---- Sections ---- */
+.step {
+  display: none;
+  min-height: calc(100vh - 100px);
+  padding: 60px 0 80px;
+}
+
+.step.active {
+  display: block;
+  animation: fadeIn 0.6s ease;
+}
+
+.step.fading {
+  animation: fadeOut 0.35s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ---- Typography ---- */
+.step-label {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+  font-weight: normal;
+  line-height: 1.25;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: normal;
+  line-height: 1.3;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+.step p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.step p.muted {
+  color: var(--text-muted);
+}
+
+.step em {
+  font-style: italic;
+}
+
+.step strong {
+  font-weight: 600;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn:hover {
+  background: #245020;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.btn-outline:hover {
+  background: var(--accent-light);
+}
+
+.back-link {
+  display: inline-block;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  cursor: pointer;
+  margin-bottom: 32px;
+  transition: color 0.15s;
+}
+
+.back-link:hover {
+  color: var(--accent);
+}
+
+/* ---- Analogy Box ---- */
+.analogy-box {
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  padding: 24px 28px;
+  margin: 28px 0;
+}
+
+.analogy-box p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.analogy-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Ocean Canvas ---- */
+.ocean-wrap {
+  position: relative;
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  height: 180px;
+  margin-bottom: 32px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--accent-light) 0%, #dce8d8 100%);
+}
+
+.ocean-wrap canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ocean-label {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+/* ---- Appearance Pills ---- */
+.pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 28px 0 32px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 8px 18px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.2s, color 0.2s;
+}
+
+.pill.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pill.highlight {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+/* ---- Observer Cards ---- */
+.observer-intro {
+  margin-bottom: 8px;
+}
+
+.exercise-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  margin: 24px 0;
+}
+
+.exercise-box h3 {
+  margin-bottom: 8px;
+}
+
+.exercise-prompt {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.9rem !important;
+  color: var(--text-muted) !important;
+  margin-bottom: 20px !important;
+}
+
+.observer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.observer-card {
+  padding: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.observer-card:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.observer-card.clicked {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  cursor: default;
+}
+
+.observer-card .card-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.observer-card.clicked .card-label {
+  opacity: 1;
+}
+
+.observer-reveal {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.6s ease, max-height 0.6s ease;
+}
+
+.observer-reveal.visible {
+  opacity: 1;
+  max-height: 600px;
+}
+
+.observer-reveal p {
+  font-size: 0.95rem;
+}
+
+/* ---- Diagram ---- */
+.diagram {
+  margin: 36px 0;
+}
+
+.diagram-visual {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.nest-outer {
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--accent-light);
+}
+
+.nest-outer > .nest-label {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.nest-middle {
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  width: 210px;
+  height: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--surface);
+}
+
+.nest-middle > .nest-label {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.nest-inner {
+  border: 2px dashed var(--text-muted);
+  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--bg);
+  opacity: 0.6;
+}
+
+.nest-inner > .nest-label {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.diagram-caption {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ---- Insight Box ---- */
+.insight-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 28px 0;
+}
+
+.insight-box p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* ---- Links Grid ---- */
+.links-section {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.links-section h3 {
+  margin-bottom: 16px;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.links-grid a {
+  display: block;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.links-grid a:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.restart-link {
+  display: inline-block;
+  margin-top: 32px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.restart-link:hover {
+  color: var(--accent);
+}
+
+/* ---- Footer ---- */
+footer {
+  width: 100%;
+  border-top: 1px solid var(--border);
+  padding: 40px 24px;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  main { padding: 0 20px; }
+  .step { padding: 40px 0 60px; }
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.4rem; }
+  .observer-grid { grid-template-columns: 1fr; }
+  .links-grid { grid-template-columns: 1fr; }
+  .nest-outer { width: 260px; height: 260px; }
+  .nest-middle { width: 170px; height: 170px; }
+  .nest-inner { width: 90px; height: 90px; }
+  .ocean-wrap { height: 140px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="nav-brand">Paradox of Acceptance</div>
+    <div class="nav-links">
+      <a href="https://nickxma.github.io/paradox-of-acceptance/">Home</a>
+      <a href="https://nickxma.github.io/meditation-quiz/">Quiz</a>
+      <a href="https://nickxma.github.io/meditation-debates/">Debates</a>
+      <a href="https://nickxma.github.io/meditation-recommender/">Recommender</a>
+      <a href="https://nickxma.github.io/teacher-debates/">Teachers</a>
+      <a href="https://nickxma.github.io/concept-explorer/" class="active">Explorer</a>
+    </div>
+  </div>
+</nav>
+
+<div class="progress-track"><div class="progress-bar" id="progress"></div></div>
+
+<main>
+
+  <!-- ===== STEP 0: Welcome ===== -->
+  <div class="step active" data-step="0" id="s0">
+    <h1>The Nature of Experience</h1>
+    <p>Three concepts keep coming up in contemplative practice: awareness, appearances, and the observer.</p>
+    <p>Separately, they seem straightforward. But understanding how they relate to each other changes what meditation is actually about.</p>
+    <p class="muted">This is an interactive exploration. It takes about five minutes.</p>
+    <button class="btn" onclick="goNext()">Begin</button>
+  </div>
+
+  <!-- ===== STEP 1: Awareness ===== -->
+  <div class="step" data-step="1" id="s1">
+    <a class="back-link" onclick="goPrev()">&#8592; Back</a>
+    <div class="step-label">1 of 4</div>
+    <h2>Awareness</h2>
+
+    <p>Right now you're reading these words. You might also notice sounds in the room. The feeling of your body. A thought about something else entirely.</p>
+
+    <p>All of these are different. But they share something: they're all <em>appearing</em>. They're all known. Something is aware of them.</p>
+
+    <p>Contemplative traditions call that something <strong>awareness</strong> — not attention, which comes and goes, but the broader condition in which everything appears. You don't produce it. It's already here. It was here before you started reading this sentence.</p>
+
+    <div class="ocean-wrap">
+      <canvas id="ocean"></canvas>
+      <div class="ocean-label">The ocean of awareness</div>
+    </div>
+
+    <div class="analogy-box">
+      <p><strong>The standard analogy is the ocean.</strong> Waves come and go — each one a different experience. But the ocean doesn't come and go with the waves. It's the medium in which they arise.</p>
+      <p>An ocean without waves is still an ocean. Awareness without any particular experience is still awareness.</p>
+    </div>
+
+    <p>Five characteristics show up across traditions when they describe awareness:</p>
+    <p><strong>It's non-dual.</strong> Perceiving and perceived aren't two separate things — they're one continuous process. There's no little person inside your head watching a screen.</p>
+    <p><strong>It's innate.</strong> You don't learn it or achieve it. It's the backdrop in which all learning and achievement happen.</p>
+    <p><strong>It's stable.</strong> Your experiences change constantly. Awareness doesn't. The screen doesn't change when the movie does.</p>
+    <p><strong>It's unpredictable.</strong> What arises in awareness isn't scripted. Thoughts, feelings, perceptions arrive spontaneously.</p>
+    <p><strong>It's intelligent.</strong> Not passive or blank — intrinsically attuned. It doesn't just contain experience; it knows it.</p>
+
+    <button class="btn" onclick="goNext()">Continue</button>
+  </div>
+
+  <!-- ===== STEP 2: Appearances ===== -->
+  <div class="step" data-step="2" id="s2">
+    <a class="back-link" onclick="goPrev()">&#8592; Back</a>
+    <div class="step-label">2 of 4</div>
+    <h2>Appearances</h2>
+
+    <p>Now look at what's actually arising in your experience, right now.</p>
+
+    <p>Everything you can notice is an <strong>appearance</strong> — the contemplative term for anything that shows up. It's not a metaphysical claim. It's just a useful word for "stuff that appears in awareness."</p>
+
+    <div class="pills-container" id="pills"></div>
+
+    <p>Appearances include what we'd normally call "inner" experience — thoughts, emotions, moods — and "outer" experience — sights, sounds, textures. In this framework, the distinction doesn't matter much. Both are things appearing.</p>
+
+    <p>The key point: appearances are not separate from awareness. They're like waves on the ocean — different in form, size, and duration, but made of the same water. A wave isn't something happening <em>to</em> the ocean. It <em>is</em> the ocean, in motion.</p>
+
+    <p>Similarly, a thought isn't something happening <em>to</em> awareness. It <em>is</em> awareness, in a particular form.</p>
+
+    <button class="btn" onclick="goNext()">Continue</button>
+  </div>
+
+  <!-- ===== STEP 3: The Observer ===== -->
+  <div class="step" data-step="3" id="s3">
+    <a class="back-link" onclick="goPrev()">&#8592; Back</a>
+    <div class="step-label">3 of 4</div>
+    <h2>The Observer</h2>
+
+    <p>Here's where it gets interesting.</p>
+
+    <p>As you read about awareness and appearances, there's probably a sense of <em>someone reading</em>. Someone behind your eyes. A "you" that's separate from everything being experienced — taking it all in, processing it, deciding what to think about it.</p>
+
+    <p>Contemplative traditions call this <strong>the observer</strong>. It feels like the subject — the one watching the movie of experience.</p>
+
+    <p>Most people never question it. It's the most natural thing in the world: there's a world of experiences, and there's <em>me</em>, experiencing them.</p>
+
+    <p>But this is where contemplative practice makes its most interesting move.</p>
+
+    <div class="exercise-box">
+      <h3>Try to find the observer.</h3>
+      <p class="exercise-prompt">Not the concept — the actual felt experience. Click anything below that feels like it could be "the one who's watching."</p>
+
+      <div class="observer-grid" id="observer-grid"></div>
+
+      <div class="observer-reveal" id="observer-reveal">
+        <p>Everything you can find when you look is an appearance. The sense of looking — an appearance. The feeling of being behind your eyes — an appearance. The thought "I am the one watching" — an appearance.</p>
+        <p><strong>The observer is just another appearance.</strong></p>
+        <p>What feels like the subject — the one watching the movie — turns out to be part of the movie. Another wave in the ocean. The perceiving and the perceived were never actually separate.</p>
+        <p>This is the central insight of non-dual practice: the subject/object split, which feels so fundamental and obvious, is not found when you actually look for it in experience.</p>
+      </div>
+    </div>
+
+    <button class="btn" onclick="goNext()" id="btn-s3" style="display:none">Continue</button>
+  </div>
+
+  <!-- ===== STEP 4: The Relationship ===== -->
+  <div class="step" data-step="4" id="s4">
+    <a class="back-link" onclick="goPrev()">&#8592; Back</a>
+    <div class="step-label">4 of 4</div>
+    <h2>The Relationship</h2>
+
+    <p>The three concepts collapse into something simpler than you'd expect.</p>
+
+    <div class="diagram">
+      <div class="diagram-visual">
+        <div class="nest-outer">
+          <span class="nest-label">Awareness</span>
+          <div class="nest-middle">
+            <span class="nest-label">Appearances</span>
+            <div class="nest-inner">
+              <span class="nest-label">The<br>Observer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="diagram-caption">The observer sits inside appearances, which arise in awareness.<br>The dashed line means: this boundary is illusory.</p>
+    </div>
+
+    <p><strong>Awareness</strong> is the space in which everything arises. It's the ocean.</p>
+
+    <p><strong>Appearances</strong> are everything that arises — thoughts, sensations, emotions, perceptions. They're the waves.</p>
+
+    <p><strong>The observer</strong> — the sense of a separate self watching it all — is itself just another appearance. Another wave that happens to feel like the ocean looking at itself.</p>
+
+    <div class="insight-box">
+      <p>Most people understand this intellectually the first time they hear it. The actual <em>recognition</em> — seeing it directly in your own experience, not as a concept but as a fact — is what contemplative practice is pointing at. It's the moment meditation stops being a technique you <em>do</em> and becomes the recognition of what was already the case.</p>
+    </div>
+
+    <p>This doesn't require belief. It doesn't require a teacher or a tradition. It requires looking — carefully and honestly — at the nature of your own experience. And noticing that the one who seems to be doing the looking can't actually be found.</p>
+
+    <div class="links-section">
+      <h3>Keep exploring</h3>
+      <div class="links-grid">
+        <a href="https://nickxma.github.io/meditation-quiz/">What kind of meditator are you?</a>
+        <a href="https://nickxma.github.io/meditation-debates/">5 questions teachers don't agree on</a>
+        <a href="https://nickxma.github.io/meditation-recommender/">What should I actually practice?</a>
+        <a href="https://nickxma.github.io/teacher-debates/">Where do teachers disagree?</a>
+      </div>
+      <a class="restart-link" onclick="goTo(0)">Start over</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Part of the <a href="https://nickxma.github.io/paradox-of-acceptance/">Paradox of Acceptance</a> toolkit. These tools draw on a wide survey of contemplative teachers and traditions.
+</footer>
+
+<script>
+// ---- Section Navigation ----
+let current = 0;
+const steps = document.querySelectorAll('.step');
+const progressBar = document.getElementById('progress');
+const totalContent = 4; // steps 1-4
+
+function updateProgress() {
+  const pct = current === 0 ? 0 : (current / totalContent) * 100;
+  progressBar.style.width = pct + '%';
+}
+
+function goTo(n) {
+  if (n < 0 || n >= steps.length || n === current) return;
+  const old = steps[current];
+  old.classList.add('fading');
+  setTimeout(() => {
+    old.classList.remove('active', 'fading');
+    steps[n].classList.add('active');
+    current = n;
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    onStepEnter(n);
+  }, 350);
+}
+
+function goNext() { goTo(current + 1); }
+function goPrev() { goTo(current - 1); }
+
+// ---- Step Enter Hooks ----
+function onStepEnter(n) {
+  if (n === 1) initOcean();
+  if (n === 2) showPills();
+  if (n === 3) initObserverCards();
+}
+
+// ---- Ocean Canvas ----
+let oceanRunning = false;
+let oceanFrame = null;
+
+function initOcean() {
+  if (oceanRunning) return;
+  oceanRunning = true;
+  const canvas = document.getElementById('ocean');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  let t = 0;
+  const layers = [
+    { y: 0.45, amp: 5,  freq: 0.008, speed: 0.012, alpha: 0.06 },
+    { y: 0.50, amp: 7,  freq: 0.011, speed: 0.018, alpha: 0.08 },
+    { y: 0.56, amp: 9,  freq: 0.014, speed: 0.022, alpha: 0.10 },
+    { y: 0.63, amp: 11, freq: 0.009, speed: 0.015, alpha: 0.13 },
+    { y: 0.71, amp: 13, freq: 0.018, speed: 0.028, alpha: 0.16 },
+    { y: 0.80, amp: 10, freq: 0.013, speed: 0.020, alpha: 0.20 },
+  ];
+
+  function draw() {
+    const w = canvas.width / (window.devicePixelRatio || 1);
+    const h = canvas.height / (window.devicePixelRatio || 1);
+    ctx.clearRect(0, 0, w, h);
+
+    layers.forEach(l => {
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      for (let x = 0; x <= w; x += 2) {
+        const wave1 = Math.sin(x * l.freq + t * l.speed) * l.amp;
+        const wave2 = Math.sin(x * l.freq * 0.6 + t * l.speed * 1.4 + 1.2) * l.amp * 0.4;
+        ctx.lineTo(x, h * l.y + wave1 + wave2);
+      }
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(45, 90, 39, ' + l.alpha + ')';
+      ctx.fill();
+    });
+
+    t++;
+    oceanFrame = requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  draw();
+}
+
+// ---- Appearance Pills ----
+const pillTexts = [
+  'a thought',
+  'the sound of the room',
+  'warmth in your hands',
+  'the color of this page',
+  'a feeling of curiosity',
+  'tension in your shoulders',
+  'the words you\'re reading',
+  'a background mood',
+  'your breathing',
+  'the idea of "you"'
+];
+let pillsShown = false;
+
+function showPills() {
+  if (pillsShown) return;
+  pillsShown = true;
+  const container = document.getElementById('pills');
+  pillTexts.forEach((text, i) => {
+    const pill = document.createElement('span');
+    pill.className = 'pill';
+    pill.textContent = text;
+    container.appendChild(pill);
+    setTimeout(() => pill.classList.add('visible'), 150 + i * 180);
+    // Highlight the last pill ("the idea of you") differently
+    if (i === pillTexts.length - 1) {
+      setTimeout(() => pill.classList.add('highlight'), 150 + i * 180 + 600);
+    }
+  });
+}
+
+// ---- Observer Cards ----
+const observerItems = [
+  'The sense of looking',
+  'A feeling of being behind your eyes',
+  'The thought "I am here"',
+  'The effort of paying attention',
+  'The sense of being someone',
+  'The feeling of searching right now'
+];
+let observerClicks = 0;
+let observerInited = false;
+
+function initObserverCards() {
+  if (observerInited) return;
+  observerInited = true;
+  const grid = document.getElementById('observer-grid');
+  observerItems.forEach(text => {
+    const card = document.createElement('div');
+    card.className = 'observer-card';
+    card.innerHTML = text + '<span class="card-label">&#8592; appearance</span>';
+    card.addEventListener('click', function() {
+      if (this.classList.contains('clicked')) return;
+      this.classList.add('clicked');
+      observerClicks++;
+      if (observerClicks >= 3) {
+        setTimeout(() => {
+          document.getElementById('observer-reveal').classList.add('visible');
+          document.getElementById('btn-s3').style.display = 'inline-block';
+        }, 400);
+      }
+    });
+    grid.appendChild(card);
+  });
+}
+
+// ---- Init ----
+updateProgress();
+</script>
+</body>
+</html>
