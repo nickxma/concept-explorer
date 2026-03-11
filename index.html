@@ -315,6 +315,15 @@ h3 {
   background: var(--accent-light);
 }
 
+@keyframes pillFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(var(--float-distance, -5px)); }
+}
+
+.pill.floating {
+  animation: pillFloat var(--float-duration, 4s) ease-in-out var(--float-delay, 0s) infinite;
+}
+
 /* ---- Observer Cards ---- */
 .observer-intro {
   margin-bottom: 8px;
@@ -498,6 +507,268 @@ h3 {
   line-height: 1.6;
 }
 
+/* ---- Diagram States ---- */
+.diagram-before {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.diagram-before .sep-circles {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.sep-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.sep-circle.c-awareness {
+  border: 2px solid var(--accent);
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.sep-circle.c-appearances {
+  border: 2px solid var(--accent);
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
+.sep-circle.c-observer {
+  border: 2px dashed var(--text-muted);
+  background: var(--bg);
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.diagram-after {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.diagram-after.visible {
+  display: block;
+  opacity: 1;
+}
+
+.diagram-before.hidden {
+  display: none;
+}
+
+.diagram-merge-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-weight: 600;
+  color: var(--accent);
+  background: transparent;
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.diagram-merge-btn:hover {
+  background: var(--accent-light);
+  transform: translateY(-1px);
+}
+
+/* ---- Analogy Explorer ---- */
+.analogy-explorer {
+  margin: 40px 0;
+}
+
+.analogy-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 0;
+}
+
+.analogy-tab {
+  padding: 12px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.analogy-tab:hover {
+  color: var(--accent);
+}
+
+.analogy-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.analogy-panel {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.analogy-panel.active {
+  display: block;
+}
+
+.analogy-visual {
+  width: 100%;
+  height: 160px;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Sky visual */
+.sky-visual {
+  background: linear-gradient(180deg, #b8d4e8 0%, #dce8f5 50%, #eef3f9 100%);
+}
+
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50px;
+  animation: cloudDrift linear infinite;
+}
+
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+}
+
+.cloud-1 {
+  width: 80px; height: 28px; top: 30px; left: 10%;
+  animation-duration: 18s;
+}
+.cloud-1::before { width: 36px; height: 36px; top: -18px; left: 14px; }
+.cloud-1::after { width: 24px; height: 24px; top: -10px; left: 44px; }
+
+.cloud-2 {
+  width: 100px; height: 32px; top: 65px; left: 55%;
+  animation-duration: 24s;
+  animation-delay: -8s;
+}
+.cloud-2::before { width: 44px; height: 44px; top: -22px; left: 18px; }
+.cloud-2::after { width: 30px; height: 30px; top: -14px; left: 54px; }
+
+.cloud-3 {
+  width: 60px; height: 20px; top: 100px; left: 30%;
+  animation-duration: 20s;
+  animation-delay: -4s;
+  opacity: 0.6;
+}
+.cloud-3::before { width: 26px; height: 26px; top: -13px; left: 10px; }
+.cloud-3::after { width: 18px; height: 18px; top: -8px; left: 32px; }
+
+@keyframes cloudDrift {
+  from { transform: translateX(-120px); }
+  to { transform: translateX(calc(100vw + 120px)); }
+}
+
+/* Mirror visual */
+.mirror-visual {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 48%, var(--border) 49%, var(--border) 51%, var(--accent-light) 52%, var(--accent-light) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.mirror-shape {
+  width: 80px;
+  height: 100px;
+  border: 3px solid var(--accent);
+  border-radius: 40px 40px 4px 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(238,243,236,0.8) 100%);
+  position: absolute;
+  top: 14px;
+}
+
+.mirror-reflection {
+  width: 80px;
+  height: 100px;
+  border: 3px solid var(--accent);
+  border-radius: 4px 4px 40px 40px;
+  background: linear-gradient(180deg, rgba(238,243,236,0.4) 0%, rgba(255,255,255,0.2) 100%);
+  position: absolute;
+  bottom: 14px;
+  opacity: 0.35;
+  transform: scaleY(-1);
+  filter: blur(0.5px);
+}
+
+/* Ocean tab visual */
+.ocean-tab-visual {
+  background: linear-gradient(180deg, var(--accent-light) 0%, #dce8d8 100%);
+  position: relative;
+}
+
+.ocean-tab-visual canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.analogy-text {
+  padding: 20px 24px;
+  background: var(--accent-light);
+  border-radius: 0 0 12px 12px;
+  margin-bottom: 0;
+}
+
+.analogy-text .mapping {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.analogy-text .mapping:last-child {
+  margin-bottom: 0;
+}
+
+.analogy-text .mapping strong {
+  color: var(--accent);
+}
+
+.analogy-desc {
+  font-size: 0.95rem !important;
+  line-height: 1.7;
+  padding: 0 24px;
+  margin-top: 16px !important;
+  margin-bottom: 0 !important;
+}
+
 /* ---- Insight Box ---- */
 .insight-box {
   background: var(--surface);
@@ -599,6 +870,11 @@ footer a:hover {
   .nest-middle { width: 170px; height: 170px; }
   .nest-inner { width: 90px; height: 90px; }
   .ocean-wrap { height: 140px; }
+  .sep-circle { width: 100px; height: 100px; font-size: 0.6rem; }
+  .sep-circles { gap: 12px !important; }
+  .analogy-tab { padding: 10px 16px; font-size: 0.8rem; }
+  .analogy-visual { height: 130px; }
+  .analogy-text { padding: 16px 20px; }
 }
 </style>
 </head>
@@ -727,18 +1003,28 @@ footer a:hover {
     <p>The three concepts collapse into something simpler than you'd expect.</p>
 
     <div class="diagram">
-      <div class="diagram-visual">
-        <div class="nest-outer">
-          <span class="nest-label">Awareness</span>
-          <div class="nest-middle">
-            <span class="nest-label">Appearances</span>
-            <div class="nest-inner">
-              <span class="nest-label">The<br>Observer</span>
+      <div class="diagram-before" id="diagram-before">
+        <div class="sep-circles">
+          <div class="sep-circle c-awareness">Awareness</div>
+          <div class="sep-circle c-appearances">Appearances</div>
+          <div class="sep-circle c-observer">The<br>Observer</div>
+        </div>
+        <button class="diagram-merge-btn" onclick="mergeDiagram()">See the relationship &rarr;</button>
+      </div>
+      <div class="diagram-after" id="diagram-after">
+        <div class="diagram-visual">
+          <div class="nest-outer">
+            <span class="nest-label">Awareness</span>
+            <div class="nest-middle">
+              <span class="nest-label">Appearances</span>
+              <div class="nest-inner">
+                <span class="nest-label">The<br>Observer</span>
+              </div>
             </div>
           </div>
         </div>
+        <p class="diagram-caption">The observer sits inside appearances, which arise in awareness.<br>The dashed line means: this boundary is illusory.</p>
       </div>
-      <p class="diagram-caption">The observer sits inside appearances, which arise in awareness.<br>The dashed line means: this boundary is illusory.</p>
     </div>
 
     <p><strong>Awareness</strong> is the space in which everything arises. It's the ocean.</p>
@@ -752,6 +1038,55 @@ footer a:hover {
     </div>
 
     <p>This doesn't require belief. It doesn't require a teacher or a tradition. It requires looking — carefully and honestly — at the nature of your own experience. And noticing that the one who seems to be doing the looking can't actually be found.</p>
+
+    <!-- Analogy Explorer -->
+    <div class="analogy-explorer">
+      <h3>Three ways to see it</h3>
+      <div class="analogy-tabs">
+        <button class="analogy-tab active" data-tab="ocean" onclick="switchAnalogy('ocean')">Ocean</button>
+        <button class="analogy-tab" data-tab="sky" onclick="switchAnalogy('sky')">Sky</button>
+        <button class="analogy-tab" data-tab="mirror" onclick="switchAnalogy('mirror')">Mirror</button>
+      </div>
+
+      <div class="analogy-panel active" id="tab-ocean">
+        <div class="analogy-visual ocean-tab-visual">
+          <canvas id="ocean-tab"></canvas>
+        </div>
+        <div class="analogy-text">
+          <p class="mapping"><strong>Awareness</strong> = the ocean itself</p>
+          <p class="mapping"><strong>Appearances</strong> = the waves</p>
+          <p class="mapping"><strong>Observer</strong> = the feeling of standing on shore, watching</p>
+        </div>
+        <p class="analogy-desc muted">The waves aren't separate from the ocean — they're made of it. And the sense of standing apart, watching from shore? That's just another wave. There is no shore.</p>
+      </div>
+
+      <div class="analogy-panel" id="tab-sky">
+        <div class="analogy-visual sky-visual">
+          <div class="cloud cloud-1"></div>
+          <div class="cloud cloud-2"></div>
+          <div class="cloud cloud-3"></div>
+        </div>
+        <div class="analogy-text">
+          <p class="mapping"><strong>Awareness</strong> = the sky</p>
+          <p class="mapping"><strong>Appearances</strong> = the clouds</p>
+          <p class="mapping"><strong>Observer</strong> = the feeling of looking up</p>
+        </div>
+        <p class="analogy-desc muted">Clouds don't damage the sky or change its nature. They appear, shift, dissolve. The sense that "you" are looking up at them is itself just another cloud drifting through.</p>
+      </div>
+
+      <div class="analogy-panel" id="tab-mirror">
+        <div class="analogy-visual mirror-visual">
+          <div class="mirror-shape"></div>
+          <div class="mirror-reflection"></div>
+        </div>
+        <div class="analogy-text">
+          <p class="mapping"><strong>Awareness</strong> = the mirror</p>
+          <p class="mapping"><strong>Appearances</strong> = the reflections</p>
+          <p class="mapping"><strong>Observer</strong> = the feeling of being the one looking in</p>
+        </div>
+        <p class="analogy-desc muted">A mirror doesn't choose what it reflects. It doesn't strain or struggle. And the face you see looking back? It's a reflection too — not separate from the mirror's surface.</p>
+      </div>
+    </div>
 
     <div class="links-section">
       <h3>Keep exploring</h3>
@@ -887,11 +1222,26 @@ function showPills() {
     const pill = document.createElement('span');
     pill.className = 'pill';
     pill.textContent = text;
+
+    // Assign unique floating parameters
+    const floatDist = -(4 + Math.random() * 2); // -4 to -6px
+    const floatDur = 3 + Math.random() * 3;     // 3-6s
+    const floatDelay = Math.random() * 2;        // 0-2s offset
+    pill.style.setProperty('--float-distance', floatDist + 'px');
+    pill.style.setProperty('--float-duration', floatDur + 's');
+    pill.style.setProperty('--float-delay', floatDelay + 's');
+
     container.appendChild(pill);
-    setTimeout(() => pill.classList.add('visible'), 150 + i * 180);
+
+    const fadeInTime = 150 + i * 180;
+    setTimeout(() => pill.classList.add('visible'), fadeInTime);
+
+    // Start floating after fade-in completes
+    setTimeout(() => pill.classList.add('floating'), fadeInTime + 500);
+
     // Highlight the last pill ("the idea of you") differently
     if (i === pillTexts.length - 1) {
-      setTimeout(() => pill.classList.add('highlight'), 150 + i * 180 + 600);
+      setTimeout(() => pill.classList.add('highlight'), fadeInTime + 600);
     }
   });
 }
@@ -930,6 +1280,111 @@ function initObserverCards() {
     grid.appendChild(card);
   });
 }
+
+// ---- Diagram Merge ----
+function mergeDiagram() {
+  const before = document.getElementById('diagram-before');
+  const after = document.getElementById('diagram-after');
+  before.classList.add('hidden');
+  after.style.display = 'block';
+  // Trigger reflow then fade in
+  requestAnimationFrame(() => {
+    after.classList.add('visible');
+  });
+}
+
+// ---- Analogy Explorer ----
+let oceanTabRunning = false;
+let oceanTabFrame = null;
+
+function switchAnalogy(tab) {
+  document.querySelectorAll('.analogy-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.analogy-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector('.analogy-tab[data-tab="' + tab + '"]').classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+
+  if (tab === 'ocean') {
+    initOceanTab();
+  } else {
+    // Stop ocean tab animation when not visible
+    if (oceanTabFrame) {
+      cancelAnimationFrame(oceanTabFrame);
+      oceanTabFrame = null;
+      oceanTabRunning = false;
+    }
+  }
+}
+
+function initOceanTab() {
+  if (oceanTabRunning) return;
+  oceanTabRunning = true;
+  const canvas = document.getElementById('ocean-tab');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  let t = 0;
+  const layers = [
+    { y: 0.40, amp: 4,  freq: 0.009, speed: 0.013, alpha: 0.06 },
+    { y: 0.48, amp: 6,  freq: 0.012, speed: 0.019, alpha: 0.09 },
+    { y: 0.57, amp: 8,  freq: 0.015, speed: 0.024, alpha: 0.12 },
+    { y: 0.67, amp: 10, freq: 0.010, speed: 0.016, alpha: 0.15 },
+    { y: 0.78, amp: 8,  freq: 0.014, speed: 0.021, alpha: 0.19 },
+  ];
+
+  function draw() {
+    const w = canvas.width / (window.devicePixelRatio || 1);
+    const h = canvas.height / (window.devicePixelRatio || 1);
+    ctx.clearRect(0, 0, w, h);
+    layers.forEach(l => {
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      for (let x = 0; x <= w; x += 2) {
+        const wave1 = Math.sin(x * l.freq + t * l.speed) * l.amp;
+        const wave2 = Math.sin(x * l.freq * 0.6 + t * l.speed * 1.4 + 1.2) * l.amp * 0.4;
+        ctx.lineTo(x, h * l.y + wave1 + wave2);
+      }
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(45, 90, 39, ' + l.alpha + ')';
+      ctx.fill();
+    });
+    t++;
+    oceanTabFrame = requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  draw();
+}
+
+// ---- Step enter: also handle step 4 analogy ocean init ----
+const origOnStepEnter = onStepEnter;
+onStepEnter = function(n) {
+  origOnStepEnter(n);
+  if (n === 4) {
+    // The ocean tab is active by default, start its canvas
+    initOceanTab();
+  }
+  // Stop ocean animations when leaving their steps
+  if (n !== 1 && oceanFrame) {
+    cancelAnimationFrame(oceanFrame);
+    oceanFrame = null;
+    oceanRunning = false;
+  }
+  if (n !== 4 && oceanTabFrame) {
+    cancelAnimationFrame(oceanTabFrame);
+    oceanTabFrame = null;
+    oceanTabRunning = false;
+  }
+};
 
 // ---- Init ----
 updateProgress();
