@@ -784,6 +784,126 @@ h3 {
   margin-bottom: 0;
 }
 
+/* ---- Appearances Walkthrough ---- */
+.appearance-walkthrough {
+  margin: 28px 0 32px;
+}
+
+.appearance-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+  min-height: 180px;
+  transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.appearance-card.fade-out {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.appearance-card.mystery {
+  border-style: dashed;
+  border-color: var(--text-muted);
+}
+
+.appearance-card p {
+  margin-bottom: 0;
+}
+
+.appearance-type {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.appearance-type.mystery {
+  color: var(--text-muted);
+}
+
+.appearance-name {
+  font-size: 1.3rem;
+  font-weight: normal;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.appearance-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.appearance-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.appearance-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.appearance-dot.active {
+  background: var(--accent);
+  transform: scale(1.3);
+}
+
+.appearance-dot.done {
+  background: var(--accent);
+}
+
+.appearance-dot.mystery {
+  background: var(--text-muted);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.appearance-advance {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: opacity 0.2s;
+}
+
+.appearance-advance:hover {
+  opacity: 0.7;
+}
+
+.appearance-collected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  min-height: 20px;
+}
+
+.appearance-collected .pill {
+  font-size: 0.8rem;
+  padding: 6px 14px;
+}
+
 /* ---- Links Grid ---- */
 .links-section {
   margin-top: 48px;
@@ -875,6 +995,8 @@ footer a:hover {
   .analogy-tab { padding: 10px 16px; font-size: 0.8rem; }
   .analogy-visual { height: 130px; }
   .analogy-text { padding: 16px 20px; }
+  .appearance-card { padding: 24px 20px; min-height: 160px; }
+  .appearance-name { font-size: 1.15rem; }
 }
 </style>
 </head>
@@ -946,11 +1068,22 @@ footer a:hover {
     <div class="step-label">2 of 4</div>
     <h2>Appearances</h2>
 
-    <p>Now look at what's actually arising in your experience, right now.</p>
+    <p>Now look at what's arising in your experience, right now.</p>
 
     <p>Everything you can notice is an <strong>appearance</strong> — the contemplative term for anything that shows up. It's not a metaphysical claim. It's just a useful word for "stuff that appears in awareness."</p>
 
-    <div class="pills-container" id="pills"></div>
+    <div class="appearance-walkthrough" id="walkthrough">
+      <div class="appearance-card" id="appearance-card">
+        <div class="appearance-type" id="appearance-type"></div>
+        <div class="appearance-name" id="appearance-name"></div>
+        <p class="appearance-desc" id="appearance-desc"></p>
+        <div class="appearance-footer">
+          <div class="appearance-dots" id="appearance-dots"></div>
+          <button class="appearance-advance" id="appearance-advance" onclick="advanceAppearance()">Notice the next one &rarr;</button>
+        </div>
+      </div>
+      <div class="appearance-collected" id="appearance-collected"></div>
+    </div>
 
     <p>Appearances include what we'd normally call "inner" experience — thoughts, emotions, moods — and "outer" experience — sights, sounds, textures. In this framework, the distinction doesn't matter much. Both are things appearing.</p>
 
@@ -1096,7 +1229,7 @@ footer a:hover {
       <div class="links-grid">
         <a href="https://nickxma.github.io/meditation-quiz/">What kind of meditator are you?</a>
         <a href="https://nickxma.github.io/meditation-debates/">5 questions teachers don't agree on</a>
-        <a href="https://nickxma.github.io/meditation-recommender/">What should I actually practice?</a>
+        <a href="https://nickxma.github.io/meditation-recommender/">What should I practice?</a>
         <a href="https://nickxma.github.io/teacher-debates/">Where do teachers disagree?</a>
       </div>
       <a class="restart-link" onclick="goTo(0)">Start over</a>
@@ -1141,7 +1274,7 @@ function goPrev() { goTo(current - 1); }
 // ---- Step Enter Hooks ----
 function onStepEnter(n) {
   if (n === 1) initOcean();
-  if (n === 2) showPills();
+  if (n === 2) initWalkthrough();
   if (n === 3) initObserverCards();
 }
 
@@ -1202,51 +1335,108 @@ function initOcean() {
   draw();
 }
 
-// ---- Appearance Pills ----
-const pillTexts = [
-  'a thought',
-  'the sound of the room',
-  'warmth in your hands',
-  'the color of this page',
-  'a feeling of curiosity',
-  'tension in your shoulders',
-  'the words you\'re reading',
-  'a background mood',
-  'your breathing',
-  'the idea of "you"'
+// ---- Appearances Walkthrough ----
+const appearances = [
+  {
+    type: 'SOUND',
+    name: 'The sound of the room',
+    desc: 'Some sound is present right now. Traffic, a fan, the hum of a device \u2014 or near-silence, which is itself a quality of hearing. You didn\'t choose it. It appeared.'
+  },
+  {
+    type: 'SENSATION',
+    name: 'Warmth in your hands',
+    desc: 'Notice the temperature in your palms. Warmth, coolness, a subtle tingling. This sensation was already here before you looked for it.'
+  },
+  {
+    type: 'SIGHT',
+    name: 'The color of this page',
+    desc: 'Light background, dark text, hints of green. You don\'t assemble these visual qualities. They show up whole, without effort.'
+  },
+  {
+    type: 'EMOTION',
+    name: 'A background mood',
+    desc: 'Some feeling-tone is coloring this moment \u2014 interest, restlessness, calm, mild boredom. It doesn\'t announce itself. It\'s just there, like weather.'
+  },
+  {
+    type: 'THOUGHT',
+    name: 'The thought you just had',
+    desc: 'Maybe about this exercise. Maybe something unrelated. It arrived uninvited, lasted a moment, and was noticed. You didn\'t author it in advance.'
+  },
+  {
+    type: '?',
+    name: 'The sense of \u201cyou,\u201d reading this',
+    desc: 'This one feels different. There seems to be someone here \u2014 a reader, a center behind the eyes. But is this, too, just another appearance? Or is it the one thing that isn\'t?',
+    mystery: true
+  }
 ];
-let pillsShown = false;
+let currentAppearance = 0;
+let walkthroughStarted = false;
 
-function showPills() {
-  if (pillsShown) return;
-  pillsShown = true;
-  const container = document.getElementById('pills');
-  pillTexts.forEach((text, i) => {
-    const pill = document.createElement('span');
-    pill.className = 'pill';
-    pill.textContent = text;
-
-    // Assign unique floating parameters
-    const floatDist = -(4 + Math.random() * 2); // -4 to -6px
-    const floatDur = 3 + Math.random() * 3;     // 3-6s
-    const floatDelay = Math.random() * 2;        // 0-2s offset
-    pill.style.setProperty('--float-distance', floatDist + 'px');
-    pill.style.setProperty('--float-duration', floatDur + 's');
-    pill.style.setProperty('--float-delay', floatDelay + 's');
-
-    container.appendChild(pill);
-
-    const fadeInTime = 150 + i * 180;
-    setTimeout(() => pill.classList.add('visible'), fadeInTime);
-
-    // Start floating after fade-in completes
-    setTimeout(() => pill.classList.add('floating'), fadeInTime + 500);
-
-    // Highlight the last pill ("the idea of you") differently
-    if (i === pillTexts.length - 1) {
-      setTimeout(() => pill.classList.add('highlight'), fadeInTime + 600);
-    }
+function initWalkthrough() {
+  if (walkthroughStarted) return;
+  walkthroughStarted = true;
+  const dotsEl = document.getElementById('appearance-dots');
+  appearances.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'appearance-dot' + (i === 0 ? ' active' : '');
+    dotsEl.appendChild(dot);
   });
+  renderAppearance(0);
+}
+
+function renderAppearance(index) {
+  const app = appearances[index];
+  const card = document.getElementById('appearance-card');
+  const typeEl = document.getElementById('appearance-type');
+  const nameEl = document.getElementById('appearance-name');
+  const descEl = document.getElementById('appearance-desc');
+  const advBtn = document.getElementById('appearance-advance');
+
+  typeEl.textContent = app.type;
+  typeEl.className = 'appearance-type' + (app.mystery ? ' mystery' : '');
+  nameEl.textContent = app.name;
+  descEl.textContent = app.desc;
+
+  if (app.mystery) {
+    card.classList.add('mystery');
+  } else {
+    card.classList.remove('mystery');
+  }
+
+  document.querySelectorAll('.appearance-dot').forEach((dot, i) => {
+    dot.className = 'appearance-dot';
+    if (i < index) dot.classList.add('done');
+    if (i === index) dot.classList.add(app.mystery ? 'mystery' : 'active');
+  });
+
+  if (index === appearances.length - 1) {
+    advBtn.style.display = 'none';
+  } else if (index === appearances.length - 2) {
+    advBtn.textContent = 'Notice one more \u2192';
+  } else {
+    advBtn.textContent = 'Notice the next one \u2192';
+  }
+}
+
+function advanceAppearance() {
+  if (currentAppearance >= appearances.length - 1) return;
+
+  const collected = document.getElementById('appearance-collected');
+  const pill = document.createElement('span');
+  pill.className = 'pill';
+  pill.textContent = appearances[currentAppearance].name.toLowerCase();
+  collected.appendChild(pill);
+  setTimeout(() => pill.classList.add('visible'), 50);
+
+  const card = document.getElementById('appearance-card');
+  card.classList.add('fade-out');
+
+  setTimeout(() => {
+    currentAppearance++;
+    renderAppearance(currentAppearance);
+    void card.offsetWidth;
+    card.classList.remove('fade-out');
+  }, 300);
 }
 
 // ---- Observer Cards ----
