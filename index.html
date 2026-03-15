@@ -8,17 +8,37 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #f7f6f3;
+  --bg: #fafafa;
   --surface: #ffffff;
-  --border: #e4e2dc;
-  --text: #1a1a18;
-  --text-muted: #6b6966;
-  --accent: #2d5a27;
-  --accent-light: #eef3ec;
+  --border: #e3e8ee;
+  --text: #1a1a2e;
+  --text-secondary: #555;
+  --text-tertiary: #888;
+  --text-muted: #555;
+  --accent: #5469d4;
+  --accent-light: #eef1fb;
+  --accent-soft: #eef1fb;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16161a;
+    --surface: #1e1e24;
+    --border: #2a2a30;
+    --text: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #666;
+    --text-muted: #a0a0a0;
+    --accent: #7b8ff5;
+    --accent-light: rgba(123, 143, 245, 0.1);
+    --accent-soft: rgba(123, 143, 245, 0.1);
+  }
+  .poa-nav { background: rgba(22, 22, 26, 0.88); }
 }
 
 body {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--font-sans);
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -39,7 +59,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
-  background: rgba(246, 249, 252, 0.88);
+  background: rgba(250, 250, 250, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border, #e3e8ee);
@@ -121,7 +141,7 @@ main {
 
 /* ---- Typography ---- */
 .step-label {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -151,7 +171,7 @@ h3 {
   font-weight: 600;
   line-height: 1.4;
   margin-bottom: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 
 .step p {
@@ -179,7 +199,7 @@ h3 {
   margin-top: 12px;
   padding: 14px 32px;
   font-size: 1rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-weight: 600;
   color: #fff;
   background: var(--accent);
@@ -190,7 +210,7 @@ h3 {
 }
 
 .btn:hover {
-  background: #245020;
+  opacity: 0.88;
   transform: translateY(-1px);
 }
 
@@ -210,7 +230,7 @@ h3 {
 
 .back-link {
   display: inline-block;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--text-muted);
   text-decoration: none;
@@ -251,7 +271,7 @@ h3 {
   margin-bottom: 32px;
   border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--accent-light) 0%, #dce8d8 100%);
+  background: linear-gradient(180deg, var(--accent-light) 0%, var(--accent-soft) 100%);
 }
 
 .ocean-wrap canvas {
@@ -266,7 +286,7 @@ h3 {
   position: absolute;
   bottom: 12px;
   right: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -286,7 +306,7 @@ h3 {
 .pill {
   display: inline-block;
   padding: 8px 18px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--text-muted);
   background: var(--surface);
@@ -335,7 +355,7 @@ h3 {
 }
 
 .exercise-prompt {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.9rem !important;
   color: var(--text-muted) !important;
   margin-bottom: 20px !important;
@@ -350,7 +370,7 @@ h3 {
 
 .observer-card {
   padding: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--text);
@@ -434,7 +454,7 @@ h3 {
   top: 16px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -459,7 +479,7 @@ h3 {
   top: 14px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -482,7 +502,7 @@ h3 {
 }
 
 .nest-inner > .nest-label {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -493,7 +513,7 @@ h3 {
 }
 
 .diagram-caption {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.8rem;
   color: var(--text-muted);
   text-align: center;
@@ -523,7 +543,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -570,7 +590,7 @@ h3 {
   display: inline-block;
   padding: 10px 24px;
   font-size: 0.9rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-weight: 600;
   color: var(--accent);
   background: transparent;
@@ -599,7 +619,7 @@ h3 {
 
 .analogy-tab {
   padding: 12px 24px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-muted);
@@ -640,7 +660,7 @@ h3 {
 
 /* Sky visual */
 .sky-visual {
-  background: linear-gradient(180deg, #b8d4e8 0%, #dce8f5 50%, #eef3f9 100%);
+  background: linear-gradient(180deg, var(--accent-soft) 0%, var(--accent-light) 50%, var(--bg) 100%);
 }
 
 .cloud {
@@ -720,7 +740,7 @@ h3 {
 
 /* Ocean tab visual */
 .ocean-tab-visual {
-  background: linear-gradient(180deg, var(--accent-light) 0%, #dce8d8 100%);
+  background: linear-gradient(180deg, var(--accent-light) 0%, var(--accent-soft) 100%);
   position: relative;
 }
 
@@ -739,7 +759,7 @@ h3 {
 }
 
 .analogy-text .mapping {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   line-height: 1.6;
   color: var(--text);
@@ -806,7 +826,7 @@ h3 {
 }
 
 .appearance-type {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -869,7 +889,7 @@ h3 {
 }
 
 .appearance-advance {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--accent);
@@ -922,7 +942,7 @@ h3 {
   border-radius: 10px;
   text-decoration: none;
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 500;
   line-height: 1.4;
@@ -937,7 +957,7 @@ h3 {
 .restart-link {
   display: inline-block;
   margin-top: 32px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--text-muted);
   text-decoration: none;
@@ -1032,6 +1052,9 @@ h3 {
   .poa-nav-links a { font-size: 0.78rem; }
 }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="https://paradoxofacceptance.xyz/favicon/favicon.ico" type="image/x-icon">
 <link rel="icon" href="https://paradoxofacceptance.xyz/favicon/favicon-32x32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="https://paradoxofacceptance.xyz/favicon/favicon-16x16.png" type="image/png" sizes="16x16">
